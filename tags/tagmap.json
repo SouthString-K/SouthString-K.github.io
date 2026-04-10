@@ -1,0 +1,14 @@
+{
+    "前端": "#b8daff",
+    "JavaScript": "#eeff00",
+    "C/C++": "#ffd8b5",
+    "嵌入式": "#c3e6cb",
+    "心得": "#f5e6cc",
+    "Linux": "#e0e0e0",
+    "Python": "#ffd43b",
+    "AI": "#c7d2fe",
+    "计算机视觉": "#b8f2e6",
+    "树莓派": "#ffc8dd",
+    "机器人": "#d8f3dc",
+    "default": "#e0e0e0"
+}

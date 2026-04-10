@@ -1,0 +1,88 @@
+[
+  {
+    "id": 7,
+    "name": "浙江省机器人大赛：相机标定",
+    "has_img": false,
+    "summary": "整理相机标定的核心内容，包括针孔相机模型、内参矩阵、畸变、标定板流程、OpenCV 标定步骤和常用公式。",
+    "tags": [
+      { "name": "计算机视觉" },
+      { "name": "机器人" }
+    ],
+    "pagePath": "ZhejiangRobotCompetition/cameraCalibration",
+    "time": "Apr 10, 2026"
+  },
+  {
+    "id": 6,
+    "name": "浙江省机器人大赛：树莓派使用",
+    "has_img": false,
+    "summary": "整理比赛准备中和树莓派相关的常用内容，包括 IP 查看、SSH、VNC、文件传输、部署和常见命令。",
+    "tags": [
+      { "name": "树莓派" },
+      { "name": "机器人" }
+    ],
+    "pagePath": "ZhejiangRobotCompetition/content",
+    "time": "Apr 10, 2026"
+  },
+  {
+    "id": 5,
+    "name": "YOLOv5：从环境搭建到目标检测",
+    "has_img": false,
+    "summary": "整理我最早接触的一个实战项目，从环境安装、数据集构建、YOLOv5 训练，到如今 Ultralytics 官方训练方式的补充说明。",
+    "tags": [
+      { "name": "Python" },
+      { "name": "AI" },
+      { "name": "计算机视觉" }
+    ],
+    "pagePath": "YOLOv5/content",
+    "time": "Apr 10, 2026"
+  },
+  {
+    "id": 4,
+    "name": "博客文章及配置改为 JSON 文件",
+    "has_img": false,
+    "summary": "之前写的确实有点问题，因为一些修改的数据和文章 list 文件当时是 js 的，所以会被编译，结果变成依赖了。",
+    "tags": [
+      { "name": "前端" },
+      { "name": "JavaScript" }
+    ],
+    "pagePath": "debug/debug",
+    "time": "July 06, 2025"
+  },
+  {
+    "id": 3,
+    "name": "js 的规范与建议",
+    "has_img": false,
+    "summary": "这是在 three.js 学习中记录的官方 js 规范。",
+    "tags": [
+      { "name": "前端" },
+      { "name": "JavaScript" }
+    ],
+    "pagePath": "jsPrerequisites/jsPrerequisites",
+    "time": "July 06, 2025"
+  },
+  {
+    "id": 2,
+    "name": "About Me and This Website",
+    "has_img": true,
+    "img": "@/posts/About-me/cover.png",
+    "tags": [
+      { "name": "前端" },
+      { "name": "心得" }
+    ],
+    "summary": "讲讲我与这个博客。",
+    "pagePath": "About-me/content",
+    "time": "July 03, 2025"
+  },
+  {
+    "id": 1,
+    "name": "Hello World",
+    "has_img": true,
+    "img": "https://demo.stack.jimmycai.com/p/hello-world/cover_hu3425483315149503896.jpg",
+    "tags": [
+      { "name": "心得" }
+    ],
+    "summary": "经过几天的努力，网站的基本搭建终于完成，以此作为我发布第一篇文章的开篇。",
+    "pagePath": "hello-world/content",
+    "time": "July 2, 2025"
+  }
+]

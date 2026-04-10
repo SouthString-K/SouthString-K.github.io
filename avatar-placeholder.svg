@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="SouthString avatar placeholder">
+  <rect width="240" height="240" rx="120" fill="#1f2937"/>
+  <circle cx="120" cy="90" r="42" fill="#334155"/>
+  <path d="M52 196c10-34 37-54 68-54s58 20 68 54" fill="#334155"/>
+  <text x="120" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#20c997">SS</text>
+</svg>

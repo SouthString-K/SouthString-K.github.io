@@ -29,7 +29,8 @@
   {
     "id": 6,
     "name": "浙江省机器人大赛：树莓派使用",
-    "has_img": false,
+    "has_img": true,
+    "img": "/posts/ZhejiangRobotCompetition/image2.png",
     "summary": "整理比赛准备中和树莓派相关的常用内容，包括 IP 查看、SSH、VNC、文件传输、部署和常见命令。",
     "tags": [
       { "name": "树莓派" },

@@ -2,7 +2,8 @@
   {
     "id": 8,
     "name": "SCMamba-YOLO: Edge-Guided SS2D Modeling for Submarine Cable Detection",
-    "has_img": false,
+    "has_img": true,
+    "img": "/SCMamba-YOLO/Figure.png",
     "summary": "面向当前 SCMamba-YOLO 代码版本的技术文档，重点说明 EGVSSBlock、EdgeGuidedEnhance、SS2D 建模方式，以及该改动为什么适合海底电缆检测任务。",
     "tags": [
       { "name": "AI" },
@@ -15,7 +16,8 @@
   {
     "id": 7,
     "name": "浙江省机器人大赛：相机标定",
-    "has_img": false,
+    "has_img": true,
+    "img": "/posts/ZhejiangRobotCompetition/image.png",
     "summary": "整理相机标定的核心内容，包括针孔相机模型、内参矩阵、畸变、标定板流程、OpenCV 标定步骤和常用公式。",
     "tags": [
       { "name": "计算机视觉" },

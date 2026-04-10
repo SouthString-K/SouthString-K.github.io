@@ -42,7 +42,8 @@
   {
     "id": 5,
     "name": "YOLOv5：从环境搭建到目标检测",
-    "has_img": false,
+    "has_img": true,
+    "img": "/posts/YOLOv5/design.jpeg",
     "summary": "整理我最早接触的一个实战项目，从环境安装、数据集构建、YOLOv5 训练，到如今 Ultralytics 官方训练方式的补充说明。",
     "tags": [
       { "name": "Python" },

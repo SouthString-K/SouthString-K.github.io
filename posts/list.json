@@ -1,6 +1,6 @@
 [
   {
-    "id": 8,
+    "id": 4,
     "name": "SCMamba-YOLO: Edge-Guided SS2D Modeling for Submarine Cable Detection",
     "has_img": true,
     "img": "/SCMamba-YOLO/Figure.png",
@@ -14,7 +14,7 @@
     "time": "Apr 10, 2026"
   },
   {
-    "id": 7,
+    "id": 3,
     "name": "浙江省机器人大赛：相机标定",
     "has_img": true,
     "img": "/posts/ZhejiangRobotCompetition/image.png",
@@ -27,7 +27,7 @@
     "time": "Apr 10, 2026"
   },
   {
-    "id": 6,
+    "id": 2,
     "name": "浙江省机器人大赛：树莓派使用",
     "has_img": true,
     "img": "/posts/ZhejiangRobotCompetition/image2.png",
@@ -40,7 +40,7 @@
     "time": "Apr 10, 2026"
   },
   {
-    "id": 5,
+    "id": 1,
     "name": "YOLOv5：从环境搭建到目标检测",
     "has_img": true,
     "img": "/posts/YOLOv5/design.jpeg",
@@ -52,54 +52,5 @@
     ],
     "pagePath": "YOLOv5/content",
     "time": "Apr 10, 2026"
-  },
-  {
-    "id": 4,
-    "name": "博客文章及配置改为 JSON 文件",
-    "has_img": false,
-    "summary": "之前写的确实有点问题，因为一些修改的数据和文章 list 文件当时是 js 的，所以会被编译，结果变成依赖了。",
-    "tags": [
-      { "name": "前端" },
-      { "name": "JavaScript" }
-    ],
-    "pagePath": "debug/debug",
-    "time": "July 06, 2025"
-  },
-  {
-    "id": 3,
-    "name": "js 的规范与建议",
-    "has_img": false,
-    "summary": "这是在 three.js 学习中记录的官方 js 规范。",
-    "tags": [
-      { "name": "前端" },
-      { "name": "JavaScript" }
-    ],
-    "pagePath": "jsPrerequisites/jsPrerequisites",
-    "time": "July 06, 2025"
-  },
-  {
-    "id": 2,
-    "name": "About Me and This Website",
-    "has_img": true,
-    "img": "@/posts/About-me/cover.png",
-    "tags": [
-      { "name": "前端" },
-      { "name": "心得" }
-    ],
-    "summary": "讲讲我与这个博客。",
-    "pagePath": "About-me/content",
-    "time": "July 03, 2025"
-  },
-  {
-    "id": 1,
-    "name": "Hello World",
-    "has_img": true,
-    "img": "https://demo.stack.jimmycai.com/p/hello-world/cover_hu3425483315149503896.jpg",
-    "tags": [
-      { "name": "心得" }
-    ],
-    "summary": "经过几天的努力，网站的基本搭建终于完成，以此作为我发布第一篇文章的开篇。",
-    "pagePath": "hello-world/content",
-    "time": "July 2, 2025"
   }
 ]

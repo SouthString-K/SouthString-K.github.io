@@ -7,6 +7,7 @@ This document is written for the current `SCMamba-YOLO` codebase and is used to 
 - the overall model structure
 - the role of Mamba and `SS2D`
 - the key modifications introduced in this version
+- the enhancement front-end integrated before detection
 - why the current design is suitable for submarine cable detection
 
 The current main configuration file is:
@@ -17,6 +18,7 @@ The current core modified modules are:
 
 - `ultralytics/nn/modules/mamba_yolo.py`
 - `ultralytics/nn/modules/block.py`
+- `ultralytics/nn/modules/enhance_front.py`
 
 ## 2. Overall Model Positioning
 
@@ -413,20 +415,219 @@ This means you can clearly compare:
 
 and attribute performance changes more convincingly to the backbone modification itself.
 
-## 13. Conclusion
+## 13. Enhancement Front-End Integration
+
+Besides the backbone-level modification, the current code also integrates an underwater image enhancement network as a front-end module before the detector.
+
+Its overall inference pipeline becomes:
+
+```text
+input image -> enhancement front-end -> SCMamba-YOLO detector -> detection result
+```
+
+The purpose of this design is straightforward:
+
+- underwater images often suffer from low contrast
+- color information is frequently degraded
+- local boundaries are often blurred before detection even starts
+
+So instead of sending the raw degraded image directly into the detector, the model first enhances the visual quality and then performs detection on the enhanced result.
+
+### 13.1 Integration Strategy
+
+This fusion is implemented as a network-level integration rather than an offline preprocessing pipeline.
+
+That means:
+
+- the enhancement module is written into the model `yaml`
+- the image first passes through the enhancement front-end during forward propagation
+- the enhanced image is then fed into the original SCMamba-YOLO backbone, neck, and head
+- the main detector structure is kept unchanged
+
+Its logic can be written as:
+
+```text
+I_enh = E(I)
+Y     = D(I_enh)
+```
+
+Where:
+
+- `E(.)` denotes the enhancement front-end
+- `D(.)` denotes the SCMamba-YOLO detector
+- `I` is the raw input image
+- `I_enh` is the enhanced image
+- `Y` is the final detection output
+
+### 13.2 Code Modification Locations
+
+The front-end enhancement integration is distributed across several parts of the codebase.
+
+#### New enhancement module
+
+New file:
+
+- `ultralytics/nn/modules/enhance_front.py`
+
+Its role is:
+
+- to wrap `InteractNet` from `Enhancement-main/src/CDF_UIE_arch.py`
+- to place it as the first network layer before detection
+- to output the enhanced image used by the detector
+
+#### Module registration
+
+The enhancement module is registered in:
+
+- `ultralytics/nn/modules/__init__.py`
+- `ultralytics/nn/tasks.py`
+
+This makes sure:
+
+- `EnhanceFront` can be parsed directly in `yaml`
+- Ultralytics can recognize and build the module correctly
+
+#### Enhanced model configurations
+
+New enhanced configurations include:
+
+- `SCMamba-YOLO-T-Enhance.yaml`
+- `SCMamba-YOLO-B-Enhance.yaml`
+- `SCMamba-YOLO-L-Enhance.yaml`
+
+The original configurations are still preserved:
+
+- `SCMamba-YOLO-T.yaml`
+- `SCMamba-YOLO-B.yaml`
+- `SCMamba-YOLO-L.yaml`
+
+The difference is simple:
+
+- original versions: raw image goes directly into the detector
+- enhanced versions: image first passes through `EnhanceFront`, then enters the detector
+
+### 13.3 Training and Validation Entry
+
+The related entry files remain:
+
+- training entry: `train.py`
+- validation entry: `val.py`
+
+Additional arguments include:
+
+- `--enhance_weights`
+- `--enhance_freeze`
+
+Their purposes are:
+
+- `--enhance_weights`: load pretrained weights for the enhancement front-end
+- `--enhance_freeze`: freeze enhancement parameters and train only the detector
+
+### 13.4 Actual Training Behavior
+
+During training, the workflow is not:
+
+- enhance all images offline first
+- then train the detector on saved enhanced images
+
+Instead, the enhancement is performed online during batch forwarding.
+
+For example:
+
+- input batch: `[B, 3, 640, 640]`
+- first passes through the enhancement front-end
+- then the enhanced batch is fed into the detector
+
+This can be written as:
+
+```text
+X_enh = E(X)
+Y_hat = D(X_enh)
+```
+
+Where `X` denotes a batch of input images.
+
+This means:
+
+- every image is enhanced before detection
+- but the computation is still done batch-wise for GPU efficiency
+
+### 13.5 Weight Loading Logic
+
+For the enhanced versions:
+
+- `SCMamba-YOLO-*-Enhance.yaml`
+
+the training script requires enhancement weights to be provided through:
+
+- `--enhance_weights /path/to/interactnet.pth`
+
+If the weights are not given, the script should report an error and remind the user to train the enhancement model separately through:
+
+- `Enhancement-main/src/train.py`
+
+The front-end is also designed to handle checkpoints saved with `DataParallel`, including the common:
+
+- `module.xxx`
+
+parameter prefix.
+
+### 13.6 Why This Front-End Matters
+
+This enhancement front-end is not introduced just to improve image appearance.
+
+Its importance lies in the fact that it provides a better input domain for the detector:
+
+- clearer color contrast before feature extraction
+- more recoverable local boundaries
+- reduced underwater visual degradation before Mamba-based modeling starts
+
+This is especially meaningful for submarine cable detection because the target is:
+
+- elongated
+- often low-contrast
+- frequently submerged in visually degraded backgrounds
+
+So the enhancement front-end and the detector backbone play complementary roles:
+
+- `EnhanceFront` improves the input image domain
+- `EGVSSBlock` improves the internal feature representation
+- `SS2D` preserves long-range structural continuity
+
+In other words, the current model is no longer only a backbone-enhanced detector. It is a detector with both:
+
+- input-level enhancement
+- feature-level enhancement
+
+### 13.7 Updated Model Perspective
+
+With the front-end enhancement module included, the full logic of the model can now be summarized as:
+
+```text
+raw image
+-> enhancement front-end
+-> edge-guided local and global modeling
+-> neck fusion
+-> detection head
+```
+
+This makes the current codebase more suitable for underwater deployment than a plain detector that directly consumes degraded input images.
+
+## 14. Conclusion
 
 For the current code version, the real personal contribution can be summarized as:
 
 1. reconstructing the original `VSSBlock` into `EGVSSBlock`
 2. designing `EdgeGuidedEnhance` with a Sobel branch and a context branch
 3. improving the feature quality before `SS2D` without changing the backbone interface
-4. making the backbone more suitable for elongated, continuous, and weak-boundary submarine cable detection
+4. integrating an enhancement front-end before the detector for underwater visual restoration
+5. making the full pipeline more suitable for elongated, continuous, and weak-boundary submarine cable detection
 
 In one sentence:
 
-> `SCMamba-YOLO-T-EG` is a submarine cable detection model that introduces edge-guided enhancement into the backbone, and its core value lies in the collaborative mechanism of boundary enhancement, local topology preservation, SS2D long-range modeling, and gated refinement.
+> `SCMamba-YOLO-T-EG` is a submarine cable detection model that combines front-end image enhancement with edge-guided backbone modeling, and its core value lies in the collaborative mechanism of visual restoration, boundary enhancement, local topology preservation, SS2D long-range modeling, and gated refinement.
 
-## 14. Open-Source Repository
+## 15. Open-Source Repository
 
 The open-source repository of this project is:
 

@@ -1,5 +1,17 @@
 [
   {
+    "id": 5,
+    "name": "Claude Code Windows 安装教程",
+    "has_img": false,
+    "summary": "只保留 Windows 版本的核心安装步骤，整理 Node.js、Git for Windows 和 Claude Code 的安装方法与常用命令。",
+    "tags": [
+      { "name": "JavaScript" },
+      { "name": "前端" }
+    ],
+    "pagePath": "ClaudeCodeWindows/content",
+    "time": "Apr 10, 2026"
+  },
+  {
     "id": 4,
     "name": "SCMamba-YOLO: Edge-Guided SS2D Modeling for Submarine Cable Detection",
     "has_img": true,

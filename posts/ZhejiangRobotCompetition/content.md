@@ -87,6 +87,125 @@ lsusb
 ls /dev/video*
 ```
 
+## mjpg-streamer 使用
+
+在树莓派上做远程调试时，`mjpg-streamer` 很实用。它可以把 USB 摄像头画面直接变成浏览器里可访问的视频流，适合在电脑端快速查看实时画面。
+
+### 1. 先确认摄像头已经识别
+
+先查看系统里有没有摄像头设备：
+
+```bash
+ls /dev/video*
+```
+
+如果能看到类似下面的结果：
+
+```bash
+/dev/video0
+```
+
+就说明系统已经识别到了摄像头。通常默认使用的就是 `/dev/video0`。
+
+### 2. 安装 mjpg-streamer
+
+先更新软件源：
+
+```bash
+sudo apt update
+```
+
+然后安装：
+
+```bash
+sudo apt install -y mjpg-streamer
+```
+
+如果系统仓库里已经带好了这个包，这一步一般就能直接完成。
+
+### 3. 启动视频流
+
+最常用的一条启动命令如下：
+
+```bash
+mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 640x480 -f 30" -o "output_http.so -w /usr/share/mjpg-streamer/www -p 8080"
+```
+
+这条命令的意思是：
+
+- `-d /dev/video0`：指定摄像头设备
+- `-r 640x480`：设置分辨率
+- `-f 30`：设置帧率为 30
+- `-p 8080`：网页服务端口设为 `8080`
+
+如果你想降低树莓派压力，可以把参数调轻一点，例如：
+
+```bash
+mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 320x240 -f 15" -o "output_http.so -w /usr/share/mjpg-streamer/www -p 8080"
+```
+
+### 4. 在电脑端访问画面
+
+假设树莓派当前 IP 是：
+
+```text
+192.168.1.100
+```
+
+那么在电脑浏览器中打开：
+
+```text
+http://192.168.1.100:8080
+```
+
+通常就可以直接看到视频页面。
+
+如果只想直接取视频流地址，也可以访问：
+
+```text
+http://192.168.1.100:8080/?action=stream
+```
+
+### 5. 常用排查方法
+
+如果打不开画面，可以按下面顺序检查：
+
+1. 先确认树莓派和电脑在同一局域网
+2. 再确认 IP 地址是否正确
+3. 再确认 `/dev/video0` 是否存在
+4. 检查端口 `8080` 是否被别的程序占用
+5. 如果换了摄像头，重新执行 `ls /dev/video*` 看设备号有没有变
+
+### 6. 后台运行
+
+如果你希望关掉终端后视频流仍然继续运行，可以这样启动：
+
+```bash
+nohup mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 640x480 -f 30" -o "output_http.so -w /usr/share/mjpg-streamer/www -p 8080" > mjpg.log 2>&1 &
+```
+
+查看进程：
+
+```bash
+ps aux | grep mjpg_streamer
+```
+
+结束进程：
+
+```bash
+pkill mjpg_streamer
+```
+
+### 7. 我的建议
+
+比赛现场更推荐先用低分辨率和中等帧率跑通，例如：
+
+```bash
+mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 320x240 -f 15" -o "output_http.so -w /usr/share/mjpg-streamer/www -p 8080"
+```
+
+这样更稳定，也更适合先检查摄像头是否正常工作。等确认画面稳定后，再逐步把分辨率和帧率往上调。
+
 ### 查看串口设备
 
 ```bash

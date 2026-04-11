@@ -77,7 +77,59 @@ cd your-project-directory
 claude
 ```
 
-## 6. Git Bash 路径识别失败时的处理
+## 6. 一些常用终端命令
+
+安装完成之后，除了直接运行 `claude`，还有几条比较常用的命令可以顺手记住。
+
+### 初始化项目说明文件
+
+如果你希望 Claude Code 在进入项目时自动读取项目约定、开发规范和说明文档，可以执行：
+
+```bash
+/init
+```
+
+根据 Anthropic 官方命令文档，`/init` 用来为当前项目初始化 `CLAUDE.md` 指南文件。这样后续在这个项目里使用 Claude Code 时，它会更容易理解你的项目背景和工作方式。
+
+### 查看或管理 IDE 集成状态
+
+如果你在 Windows 上同时使用 VS Code 之类的编辑器，可以执行：
+
+```bash
+/ide
+```
+
+这个命令用于管理 IDE 集成并查看当前状态，适合在命令行和编辑器联动使用时检查配置是否正常。
+
+### 查看当前配置
+
+如果你想看看 Claude Code 当前的设置，比如主题、模型或者一些偏好配置，可以执行：
+
+```bash
+/config
+```
+
+### 清空当前会话
+
+如果当前上下文太长，或者你想重新开始一个新的会话，可以执行：
+
+```bash
+/clear
+```
+
+这个命令会清空当前对话历史，等价于重新开始当前终端会话。
+
+### 检查安装状态
+
+除了前面的版本检查，平时也很常用：
+
+```bash
+claude doctor
+```
+
+这个命令可以帮助你检查安装、配置和环境是否正常。
+
+## 7. Git Bash 路径识别失败时的处理
 
 如果你在 Windows 下使用的是原生环境，并且 Claude Code 没有正确找到 `Git Bash`，可以手动指定 `bash.exe` 路径：
 
@@ -91,7 +143,7 @@ $env:CLAUDE_CODE_GIT_BASH_PATH="C:\Program Files\Git\bin\bash.exe"
 claude
 ```
 
-## 7. 核心命令汇总
+## 8. 核心命令汇总
 
 ```bash
 node -v
@@ -102,4 +154,8 @@ claude --version
 claude doctor
 cd your-project-directory
 claude
+/init
+/ide
+/config
+/clear
 ```

@@ -48,6 +48,7 @@ From the YAML configuration, `SCMamba-YOLO` still follows the standard three-sta
 
 The backbone structure is:
 
+- `EnhanceFrontEnd`
 - `SimpleStem`
 - `EGVSSBlock x 3`
 - `VisionClueMerge`

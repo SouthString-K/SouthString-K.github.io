@@ -50,7 +50,7 @@ git --version
 
 ## 4. 安装 Claude Code
 
-在 PowerShell 或 Git Bash 中执行下面的命令：
+在 Git Bash 中执行下面的命令：
 
 ```bash
 npm install -g @anthropic-ai/claude-code

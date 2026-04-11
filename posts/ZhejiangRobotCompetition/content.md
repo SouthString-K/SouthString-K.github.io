@@ -196,14 +196,6 @@ ps aux | grep mjpg_streamer
 pkill mjpg_streamer
 ```
 
-### 7. 我的建议
-
-比赛现场更推荐先用低分辨率和中等帧率跑通，例如：
-
-```bash
-mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 320x240 -f 15" -o "output_http.so -w /usr/share/mjpg-streamer/www -p 8080"
-```
-
 这样更稳定，也更适合先检查摄像头是否正常工作。等确认画面稳定后，再逐步把分辨率和帧率往上调。
 
 ### 查看串口设备
@@ -273,57 +265,7 @@ sudo raspi-config
 
 输入树莓派用户名和密码后，即可看到桌面。
 
-## 树莓派部署时常见操作
 
-### 新建 Python 虚拟环境
-
-```bash
-python3 -m venv robot_env
-source robot_env/bin/activate
-```
-
-### 安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
-### 后台运行程序
-
-如果你不希望关掉终端后程序停止，可以使用：
-
-```bash
-nohup python3 main.py > run.log 2>&1 &
-```
-
-查看后台进程：
-
-```bash
-ps aux | grep python
-```
-
-结束进程：
-
-```bash
-kill -9 进程号
-```
-
-### 开机自启
-
-有些比赛项目需要上电自动运行，这时候可以考虑使用 `systemd` 服务进行管理。基本思路是：
-
-1. 在 `/etc/systemd/system/` 下写一个服务文件
-2. 重新加载服务
-3. 设置开机启动
-
-常见指令如下：
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable my_robot.service
-sudo systemctl start my_robot.service
-sudo systemctl status my_robot.service
-```
 
 ## 一些经验
 
